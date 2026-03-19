@@ -22,6 +22,8 @@ body{
 
 // ===== ESCENA =====
 const scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x050010);
+scene.fog = new THREE.FogExp2(0x220044, 0.02);
 scene.fog = new THREE.FogExp2(0x120022, 0.015);
 // ===== CAMARA =====
 const camera = new THREE.PerspectiveCamera(
@@ -55,15 +57,20 @@ geometry.setAttribute(
 );
 
 const material = new THREE.PointsMaterial({
-  color:0xff88ff,
+color:0xff88ff,
   size:0.35,
-transparent:true,
-opacity:0.8
+  transparent:true,
+  opacity:0.9,
+  depthWrite:false,
+  blending:THREE.AdditiveBlending
 });
 
 const stars = new THREE.Points(geometry, material);
 scene.add(stars);
-
+// luz espacial suave
+const light = new THREE.PointLight(0xff66ff, 2, 200);
+light.position.set(0,0,0);
+scene.add(light);
 // ===== CONTROL DRAG =====
 let dragging=false;
 let prevX=0;
