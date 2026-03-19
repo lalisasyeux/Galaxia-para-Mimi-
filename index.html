@@ -77,18 +77,19 @@ color:0xff88ff,
 const stars = new THREE.Points(geometry, material);
 scene.add(stars);
 // ===== NUBE ESPACIAL (NEBULOSA) =====
-const cloudGeometry = new THREE.SphereGeometry(40, 64, 64);
+const cloudGeometry = new THREE.SphereGeometry(60, 64, 64);
 
 const cloudMaterial = new THREE.MeshBasicMaterial({
   color:0xaa55ff,
   transparent:true,
-  opacity:0.08,
+  opacity:0.035,
   blending:THREE.AdditiveBlending,
   side:THREE.DoubleSide,
   depthWrite:false
 });
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
-scene.add(cloud);  
+scene.add(cloud);
+cloud.scale.set(1,0.6,1);  
 // luz espacial suave
 const light = new THREE.PointLight(0xff66ff, 2, 200);
 light.position.set(0,0,0);
