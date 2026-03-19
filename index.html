@@ -62,18 +62,47 @@ scene.add(stars);
 
 camera.position.z=5;
 
-// mouse presionado
-let mouseDown=false;
+let isDragging = false;
+let previousMousePosition = {
+    x: 0,
+    y: 0
+};
 
-window.addEventListener("mousedown",()=>mouseDown=true);
-window.addEventListener("mouseup",()=>mouseDown=false);
+window.addEventListener("mousedown", (e) => {
+    isDragging = true;
+});
+
+window.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
+window.addEventListener("mousemove", (e) => {
+
+    if(!isDragging) return;
+
+    const deltaMove = {
+        x: e.offsetX - previousMousePosition.x,
+        y: e.offsetY - previousMousePosition.y
+    };
+
+    stars.rotation.y += deltaMove.x * 0.005;
+    stars.rotation.x += deltaMove.y * 0.005;
+
+    previousMousePosition = {
+        x: e.offsetX,
+        y: e.offsetY
+    };
+});
+
+// mouse presionado
+
+
+
 
 // animación
 function animate(){
+function animate(){
 requestAnimationFrame(animate);
-
-stars.rotation.y += mouseDown ? 0.01 : 0.001;
-
 renderer.render(scene,camera);
 }
 
