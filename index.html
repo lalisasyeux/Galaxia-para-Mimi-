@@ -1,11 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<title>Galaxia</title>
+<meta charset="UTF-8">
+<title>Galaxia para Mimi</title>
+
+<style>
+body{
+  margin:0;
+  overflow:hidden;
+  background:black;
+}
+</style>
+
 </head>
 <body>
 
-<h1>Mi reina de ojos bellos</h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+// ESCENA
+const scene = new THREE.Scene();
+
+// CAMARA
+const camera = new THREE.PerspectiveCamera(
+75,
+window.innerWidth/window.innerHeight,
+0.1,
+1000
+);
+
+// RENDER
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth,window.innerHeight);
+document.body.appendChild(renderer.domElement);
+
+// ⭐ CREAR ESTRELLAS
+const geometry = new THREE.BufferGeometry();
+const vertices=[];
+
+for(let i=0;i<6000;i++){
+vertices.push(
+(Math.random()-0.5)*100,
+(Math.random()-0.5)*100,
+(Math.random()-0.5)*100
+);
+}
+
+geometry.setAttribute(
+"position",
+new THREE.Float32BufferAttribute(vertices,3)
+);
+
+const material=new THREE.PointsMaterial({
+color:0xffffff,
+size:0.1
+});
+
+const stars=new THREE.Points(geometry,material);
+scene.add(stars);
+
+camera.position.z=5;
+
+// mouse presionado
+let mouseDown=false;
+
+window.addEventListener("mousedown",()=>mouseDown=true);
+window.addEventListener("mouseup",()=>mouseDown=false);
+
+// animación
+function animate(){
+requestAnimationFrame(animate);
+
+stars.rotation.y += mouseDown ? 0.01 : 0.001;
+
+renderer.render(scene,camera);
+}
+
+animate();
+
+</script>
 
 </body>
 </html>
